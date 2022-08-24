@@ -1,64 +1,52 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 
 import css from './Searchbar.module.css';
 
-class Searchbar extends Component {
-  state = {
-    search: '',
+function Searchbar({ onSubmit }) {
+  const [search, setSearch] = useState('');
+  const searchInput = ({ target }) => {
+    const { value } = target;
+    setSearch(value);
   };
 
-  searchInput = ({ target }) => {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  submitSearch = e => {
+  const submitSearch = e => {
     e.preventDefault();
     // console.log(e);
-    const { search } = this.state;
+
     if (search === '') {
-      this.reset();
+      reset();
       return Notiflix.Notify.failure('Enter the image name first');
     }
-    this.props.onSubmit(search);
-    this.reset();
+    onSubmit(search);
+    reset();
   };
 
-  reset() {
-    this.setState({
-      search: '',
-    });
-  }
+  const reset = () => {
+    setSearch('');
+  };
 
-  render() {
-    const { search } = this.state;
-    const { searchInput, submitSearch } = this;
+  return (
+    <header className={css.searchbar}>
+      <form className={css.searchForm} onSubmit={submitSearch}>
+        <button className={css.searchFormButton} type="submit">
+          <span className={css.searchFormButtonLabel}>Search</span>
+        </button>
 
-    return (
-      <header className={css.searchbar}>
-        <form className={css.searchForm} onSubmit={submitSearch}>
-          <button className={css.searchFormButton} type="submit">
-            <span className={css.searchFormButtonLabel}>Search</span>
-          </button>
-
-          <input
-            className={css.searchFormInput}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={searchInput}
-            value={search}
-            name="search"
-          />
-        </form>
-      </header>
-    );
-  }
+        <input
+          className={css.searchFormInput}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={searchInput}
+          value={search}
+          name="search"
+        />
+      </form>
+    </header>
+  );
 }
 
 Searchbar.defaultProps = {
@@ -70,3 +58,70 @@ Searchbar.propTypes = {
 };
 
 export default Searchbar;
+
+// class Searchbar extends Component {
+//   state = {
+//     search: '',
+//   };
+
+//   searchInput = ({ target }) => {
+//     const { name, value } = target;
+//     this.setState({
+//       [name]: value,
+//     });
+//   };
+
+//   submitSearch = e => {
+//     e.preventDefault();
+//     // console.log(e);
+//     const { search } = this.state;
+//     if (search === '') {
+//       this.reset();
+//       return Notiflix.Notify.failure('Enter the image name first');
+//     }
+//     this.props.onSubmit(search);
+//     this.reset();
+//   };
+
+//   reset() {
+//     this.setState({
+//       search: '',
+//     });
+//   }
+
+//   render() {
+//     const { search } = this.state;
+//     const { searchInput, submitSearch } = this;
+
+//     return (
+//       <header className={css.searchbar}>
+//         <form className={css.searchForm} onSubmit={submitSearch}>
+//           <button className={css.searchFormButton} type="submit">
+//             <span className={css.searchFormButtonLabel}>Search</span>
+//           </button>
+
+//           <input
+//             className={css.searchFormInput}
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             placeholder="Search images and photos"
+//             onChange={searchInput}
+//             value={search}
+//             name="search"
+//           />
+//         </form>
+//       </header>
+//     );
+//   }
+// }
+
+// Searchbar.defaultProps = {
+//   search: '',
+// };
+
+// Searchbar.propTypes = {
+//   onSubmit: PropTypes.func,
+// };
+
+// export default Searchbar;

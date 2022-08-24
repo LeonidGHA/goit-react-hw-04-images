@@ -1,9 +1,15 @@
 import PropTypes from 'prop-types';
 
 function ImageGalleryItem({ webformat, id, largeImg, tags, renderImgInModal }) {
+  // console.log(renderImgInModal);
   return (
-    <li className="gallery-item" key={id} onClick={renderImgInModal}>
-      <img src={webformat} alt={tags} title={largeImg} />
+    <li className="gallery-item" key={id}>
+      <img
+        src={webformat}
+        alt={tags}
+        name={largeImg}
+        onClick={renderImgInModal}
+      />
     </li>
   );
 }
