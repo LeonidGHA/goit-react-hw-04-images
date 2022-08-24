@@ -12,11 +12,11 @@ function Modal({ onClick, children }) {
     return () => {
       document.removeEventListener('keydown', listenerKeyDown);
     };
-  }, []);
+  });
 
   const listenerKeyDown = e => {
     if (e.code === 'Escape') {
-      console.log(`esc`);
+      // console.log(`esc`);
       // this.setState({ showModal: false });
 
       onClick();
